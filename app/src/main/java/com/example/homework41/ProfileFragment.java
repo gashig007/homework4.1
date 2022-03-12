@@ -21,7 +21,13 @@ import java.nio.channels.GatheringByteChannel;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
-
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    Glide.with(binding.image).load(uri).into(binding.image);
+                }
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,14 +39,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                new ActivityResultCallback<Uri>() {
-                    @Override
-                    public void onActivityResult(Uri uri) {
-                        Glide.with(binding.image).load(uri).into(binding.image);
-                    }
-                });
         binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
