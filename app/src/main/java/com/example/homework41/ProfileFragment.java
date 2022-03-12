@@ -38,7 +38,6 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        // Handle the returned Uri
                         Glide.with(binding.image).load(uri).into(binding.image);
                     }
                 });
