@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homework41.Model;
 import com.example.homework41.OnClick;
-import com.example.homework41.R;
 import com.example.homework41.databinding.ItemProfileBinding;
 
 import java.text.SimpleDateFormat;
@@ -19,11 +17,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder> {
-    private ArrayList<String> data;
+    private ArrayList<Model> data;
     private OnClick onClick;
 
     public ProfileAdapter() {
-        data = new ArrayList<>();
+        data = new ArrayList<Model>();
     }
 
     @NonNull
@@ -52,7 +50,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         this.onClick = onClick;
     }
 
-    public String getItem(int position) {
+    public Model getItem(int position) {
         return data.get(position);
     }
 
