@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.homework41.Model.Model;
 import com.example.homework41.databinding.FragmentNewsBinding;
-import com.example.homework41.databinding.FragmentProfileBinding;
 
 public class NewsFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.example.homework41;
+package com.example.homework41.Model;
 
 import java.io.Serializable;
 

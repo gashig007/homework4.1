@@ -1,7 +1,6 @@
 package com.example.homework41.adapter;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homework41.Model;
+import com.example.homework41.Model.Model;
 import com.example.homework41.OnClick;
 import com.example.homework41.databinding.ItemProfileBinding;
 
