@@ -7,16 +7,5 @@
     android:padding="16dp"
     tools:context=".ProfileFragment">
 
-    <EditText
-        android:id="@+id/edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="save" />
 
 </LinearLayout>
