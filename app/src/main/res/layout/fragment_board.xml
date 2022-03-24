@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
+        android:padding="20dp"
         android:textSize="16sp"
         android:text="Skip"/>
 

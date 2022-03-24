@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.homework41.Prefs;
 import com.example.homework41.R;
 import com.example.homework41.databinding.FragmentBoardBinding;
 import com.example.homework41.databinding.FragmentNewsBinding;
@@ -44,5 +47,18 @@ public class BoardFragment extends Fragment {
                 }
             }
         });
+        binding.skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                close();
+            }
+        });
+    }
+
+    private void close() {
+        Prefs prefs = new Prefs(requireContext());
+        prefs.saveBoardState();
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigateUp();
     }
 }
