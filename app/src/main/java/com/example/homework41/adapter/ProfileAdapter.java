@@ -1,11 +1,13 @@
 package com.example.homework41.adapter;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homework41.Model.Model;
@@ -14,10 +16,14 @@ import com.example.homework41.databinding.ItemProfileBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder> {
-    private ArrayList<Model> data;
+    private List<Model> data;
     private OnClick onClick;
 
     public ProfileAdapter() {
@@ -29,6 +35,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     public ProfileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemProfileBinding view = ItemProfileBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);;
         return new ProfileViewHolder(view);
+    }
+
+    public void setData(List<Model> list) {
+        this.data = list;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -68,6 +79,20 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     public void deleteItem(int position){
         data.remove(position);
         notifyItemRemoved(position);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void addList(List<Model> list){
+        Comparator<Model> comparator = Comparator.comparing(new Function<Model, Long>() {
+            @Override
+            public Long apply(Model model) {
+                return model.getCreate();
+            }
+        });
+        data = list;
+        data.sort(comparator);
+        Collections.reverse(data);
+        notifyDataSetChanged();
     }
 
     class ProfileViewHolder extends RecyclerView.ViewHolder {

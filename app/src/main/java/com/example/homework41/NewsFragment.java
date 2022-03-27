@@ -51,6 +51,7 @@ public class NewsFragment extends Fragment {
         }
         if (model == null) {
             model = new Model(System.currentTimeMillis(), text);
+            App.getDataBase().newsDao().insert(model);
         }else {
             model.setTitle(text);
         }

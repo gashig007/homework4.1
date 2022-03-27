@@ -3,8 +3,11 @@ package com.example.homework41.ui.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,18 +18,34 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.homework41.App;
 import com.example.homework41.Model.Model;
 import com.example.homework41.OnClick;
 import com.example.homework41.R;
 import com.example.homework41.adapter.ProfileAdapter;
 import com.example.homework41.databinding.FragmentHomeBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private ProfileAdapter adapter;
     private boolean isChanged = false;
     private int position;
+    Model model;
+    private List<Model> list = new ArrayList<>();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        adapter = new ProfileAdapter();
+        adapter.addList(App.getDataBase().newsDao().getAll());
+    }
+
+    public HomeFragment() {
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +69,29 @@ public class HomeFragment extends Fragment {
                 open(null);
             }
         });
+
+        binding.searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                list = App.getDataBase().newsDao().getSearch(editable.toString());
+                adapter.addList(list);
+            }
+        });
+
+        binding.recycleView.setAdapter(adapter);
+        list = App.getDataBase().newsDao().sortAll();
+        adapter.addList(list);
+
         getParentFragmentManager().setFragmentResultListener("rk_news", getViewLifecycleOwner(), new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -61,10 +103,12 @@ public class HomeFragment extends Fragment {
             }
         });
         binding.recycleView.setAdapter(adapter);
+
+
         adapter.setOnClickListener(new OnClick() {
             @Override
             public void onClick(int position) {
-                Model model = adapter.getItem(position);
+                model = adapter.getItem(position);
                 isChanged = true;
                 open(model);
                 HomeFragment.this.position = position;
@@ -76,7 +120,10 @@ public class HomeFragment extends Fragment {
                         setNegativeButton("Отмена", null).setPositiveButton("Да", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        model = adapter.getItem(position);
                         adapter.deleteItem(position);
+                        App.getDataBase().newsDao().deleteTask(model);
+                        adapter.notifyDataSetChanged();
                     }
                 }).show();
             }
@@ -91,8 +138,14 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        adapter = new ProfileAdapter();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.sort){
+            adapter.setData(App.getDataBase().newsDao().sort());
+//            binding.recycleView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+
 }
