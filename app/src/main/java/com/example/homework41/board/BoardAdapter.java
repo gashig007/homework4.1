@@ -1,16 +1,18 @@
 package com.example.homework41.board;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.homework41.Model.Board;
 import com.example.homework41.R;
 import com.example.homework41.databinding.PagerBoardBinding;
@@ -19,12 +21,13 @@ import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHolder> {
     private ArrayList<Board> list;
+    private int[] lottie = new int[]{R.raw.city, R.raw.city, R.raw.city};
 
     public BoardAdapter() {
         list = new ArrayList<>();
-        list.add(new Board("Name", "Rustam", R.drawable.image1));
-        list.add(new Board("Name", "Rustam", R.drawable.image2));
-        list.add(new Board("Name", "Rustam", R.drawable.image3));
+        list.add(new Board("Name", "Rustam"));
+        list.add(new Board("Name", "Rustam"));
+        list.add(new Board("Name", "Rustam"));
     }
 
     @NonNull
@@ -36,7 +39,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHol
 
     @Override
     public void onBindViewHolder(@NonNull BoardViewHolder holder, int position) {
-holder.bind(position);
+        holder.bind(position);
     }
 
     @Override
@@ -46,6 +49,7 @@ holder.bind(position);
 
     public class BoardViewHolder extends RecyclerView.ViewHolder {
         private PagerBoardBinding binding;
+
         public BoardViewHolder(@NonNull PagerBoardBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
@@ -55,10 +59,17 @@ holder.bind(position);
             Board board = list.get(position);
             binding.textTitle.setText(board.getTitle());
             binding.description.setText(board.getDesc());
-            binding.image.setImageResource(board.getImage());
-            if (position == list.size() -1){
+            binding.animationView.setAnimation(lottie[position]);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+
+            }, 2000);
+            if (position == list.size() - 1) {
                 binding.btnStart.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 binding.btnStart.setVisibility(View.INVISIBLE);
             }
             binding.btnStart.setOnClickListener(new View.OnClickListener() {

@@ -41,4 +41,6 @@ public class Model implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 }

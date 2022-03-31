@@ -53,4 +53,10 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    //Lottie
+    implementation 'com.airbnb.android:lottie:3.7.0'
+
+    //Shake
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
 }

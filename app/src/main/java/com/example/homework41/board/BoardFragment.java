@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.homework41.Prefs;
 import com.example.homework41.R;
 import com.example.homework41.databinding.FragmentBoardBinding;

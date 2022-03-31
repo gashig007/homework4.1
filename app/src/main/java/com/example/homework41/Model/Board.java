@@ -1,14 +1,14 @@
 package com.example.homework41.Model;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class Board {
     private String title;
     private String desc;
-    private int image;
 
-    public Board(String title, String desc, int image) {
+    public Board(String title, String desc) {
         this.title = title;
         this.desc = desc;
-        this.image = image;
     }
 
     public String getTitle() {
@@ -27,11 +27,4 @@ public class Board {
         this.desc = desc;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
 }

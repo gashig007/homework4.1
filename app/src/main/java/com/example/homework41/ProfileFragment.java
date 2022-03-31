@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
@@ -33,15 +34,25 @@ import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.homework41.Model.Model;
 import com.example.homework41.adapter.ProfileAdapter;
 import com.example.homework41.databinding.FragmentProfileBinding;
 
 import java.nio.channels.GatheringByteChannel;
+import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private Prefs prefs;
+    private ProfileAdapter adapter;
+    private ArrayList<Model> models;
     private Uri uri;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +65,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         prefs = new Prefs(requireContext());
-        binding.etText.setText(prefs.getName());
-        binding.etText.addTextChangedListener(new TextWatcher() {
+        binding.etName.setText(prefs.getName());
+        binding.etName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -68,10 +79,10 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                prefs.saveName(binding.etText.getText().toString());
+                prefs.saveName(binding.etName.getText().toString());
             }
         });
-        binding.image.setOnClickListener(new View.OnClickListener() {
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -89,7 +100,7 @@ public class ProfileFragment extends Fragment {
                     if (result.getResultCode() == Activity.RESULT_OK){
                         uri = result.getData().getData();
                         prefs.saveAvatar(String.valueOf(uri));
-                        binding.image.setImageURI(uri);
+                        binding.imageView.setImageURI(uri);
                     }
                 }
             });
@@ -99,7 +110,7 @@ public class ProfileFragment extends Fragment {
         super.onStart();
         if (prefs.getAvatar() != null){
             uri = Uri.parse(prefs.getAvatar());
-            Glide.with(requireContext()).load(uri).circleCrop().into(binding.image);
+            Glide.with(requireContext()).load(uri).circleCrop().into(binding.imageView);
         }
     }
 
@@ -111,6 +122,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Glide.with(requireContext()).load(uri).circleCrop().into(binding.image);
+        Glide.with(requireContext()).load(uri).circleCrop().into(binding.imageView);
     }
 }

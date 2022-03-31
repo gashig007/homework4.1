@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.homework41.Model.Model;
 import com.example.homework41.databinding.FragmentNewsBinding;
 
@@ -37,6 +39,9 @@ public class NewsFragment extends Fragment {
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (binding.edittext.getText().toString().isEmpty()){
+                    YoYo.with(Techniques.Shake).duration(700).repeat(3).playOn(binding.edittext);
+                }
                 save();
             }
         });
