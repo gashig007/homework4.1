@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.homework41.Model.Model;
 import com.example.homework41.NewsFragment;
 import com.example.homework41.R;
+import com.example.homework41.adapter.DashboardAdapter;
 import com.example.homework41.adapter.ProfileAdapter;
 import com.example.homework41.databinding.FragmentDashboardBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +32,7 @@ public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private ArrayList <Model> list = new ArrayList<>();
-    private ProfileAdapter adapter;
+    private DashboardAdapter adapter;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,9 +72,9 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setAdapter(){
-        adapter = new ProfileAdapter();
+        adapter = new DashboardAdapter();
         binding.recNot.setAdapter(adapter);
-        adapter.setData(list);
+        adapter.setList(list);
     }
 
     @Override

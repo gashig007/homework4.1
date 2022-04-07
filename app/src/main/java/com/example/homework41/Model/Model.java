@@ -30,6 +30,9 @@ public class Model implements Serializable {
         this.title = title;
     }
 
+    public Model() {
+    }
+
     public long getCreate() {
         return create;
     }
