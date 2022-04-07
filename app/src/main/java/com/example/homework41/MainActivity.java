@@ -27,25 +27,26 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private Prefs prefs;
+    public static Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        prefs = new Prefs(this);
          AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-               R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-        NavController navController = navHostFragment.getNavController();
+               R.id.navigation_home, R.id.navigation_dashboard,
+                 R.id.navigation_notifications, R.id.profileFragment).build();
+      //  NavHostFragment navHostFragment =
+       //         (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        navController.navigate(R.id.boardFragment);
-        prefs = new Prefs(this);
+        /*navController.navigate(R.id.boardFragment);*/
+      //  prefs = new Prefs(this);
         if (!prefs.isBoardShown()){
-            navController.navigate(R.id.boardFragment);
+            navController.navigate(R.id.loginFragment);
         }
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     binding.navView.setVisibility(View.INVISIBLE);
                 }*/
-                if (navDestination.getId() == R.id.boardFragment) {
+                if (navDestination.getId() == R.id.boardFragment || navDestination.getId() == R.id.loginFragment) {
                     binding.navView.setVisibility(View.GONE);
                     getSupportActionBar().hide();
                 } else {

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.homework41.MainActivity;
 import com.example.homework41.Prefs;
 import com.example.homework41.R;
 import com.example.homework41.databinding.FragmentBoardBinding;
@@ -57,8 +58,7 @@ public class BoardFragment extends Fragment {
     }
 
     private void close() {
-        Prefs prefs = new Prefs(requireContext());
-        prefs.saveBoardState();
+        MainActivity.prefs.saveBoardState();
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigateUp();
     }
